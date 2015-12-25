@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^registration/$', 'regisry.reg.register'),
     url(r'^login/$', 'regisry.reg.login'),
     url(r'^logout/$', 'regisry.reg.logout'),
+    url(r'^$', 'blog.views.post_list', name='post_list'),
 ]
