@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <hr>
+    {% if user.is_authenticated %}
+    <p>Добро пожаловать, {{ user.username }}. Спасибо, что зашли.</p>
+    {% else %}
+    <p>Добро пожаловать, незнакомец. Пожалуйста, назовите себя.</p>
+    {% endif %}
+    <hr>
+</head>
+<body>
+{% if user.is_authenticated %}
+<input type="button" value="Logout" class="btn btn-default" onclick="javascript:window.location='/logout/'" />
+{% else %}
+<input type="button" value="Login" class="btn btn-success" onclick="javascript:window.location='/login/'" />
+{% endif %}
+<p>HELLO WORLD!</p>
+
+</body>
+</html>

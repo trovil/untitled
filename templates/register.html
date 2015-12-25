@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Enter to yours profile</h1>
+   {% if form.errors %}
+      <p style="color: red;">
+        Correct next error {{ form.errors|pluralize }}
+      </p>
+   {% endif %}
+
+   <form action="" method="post">
+       <table>
+           {{ form.as_p }}
+           {% csrf_token %}
+       </table>
+       <input type="submit" value="OK" class="btn btn-success">
+   </form>
+</body>
+</html>
