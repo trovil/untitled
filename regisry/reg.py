@@ -11,7 +11,7 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/hello/")
+            return HttpResponseRedirect("/")
     else:
         form = UserCreationForm()
     return render(request, "register.html", {'form': form})
@@ -25,7 +25,7 @@ def login(request):
             if form.get_user():
                 auth.login(request, form.get_user())
                 # Переадресовать на страницу успешного входа,
-                return HttpResponseRedirect("/hello/")
+                return HttpResponseRedirect("/")
     else:
         form = EnterForm()
 
@@ -34,4 +34,4 @@ def login(request):
 def logout(request):
     auth.logout(request)
     # Переадресовать на страницу успешного выхода,
-    return HttpResponseRedirect("/hello/")
+    return HttpResponseRedirect("/")
