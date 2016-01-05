@@ -14,6 +14,9 @@
         <a class="btn btn-default" href="{% url "post_remove" pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         {% endif %}
         <h1>{{ post.title }}</h1>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" >
+        {% endif %}
         <p>{{ post.text|linebreaks }}</p>
     </div>
             <hr>
