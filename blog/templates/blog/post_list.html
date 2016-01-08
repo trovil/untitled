@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load staticfiles %}
 {% block content %}
             {% for post in posts %}
                 <div class="post">
@@ -11,6 +12,32 @@
                     {% endif %}
                     <p>{{ post.text|linebreaks }}</p>
                     <a href="{% url "blog.views.post_detail" pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+                    <a href="{% url "blog.views.post_like" pk=post.pk %}"> <img src="{% static "like1.png" %}" width="20px" height="20px"> {{ post.likes}} </a>
+
                 </div>
             {% endfor %}
+
+    <div class="row">
+        <div class="large-3 large-offset-5 columns">
+            <ul class="pagination">
+                {% if posts.has_previous %}
+                    <li class="arrow"><a href="/page/{{ posts.previous_page_number }}/">&laquo;</a></li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&laquo;</a></li>
+                {% endif %}
+                {% for page in posts.paginator.page_range %}
+                    {% if page == posts.number %}
+                        <li class="current"><a href="/page/{{ page }}/">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="/page/{{ page }}/">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if posts.has_next %}
+                    <li class="arrow"><a href="/page/{{ posts.next_page_number }}/">&raquo;</a></li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

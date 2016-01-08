@@ -3,10 +3,12 @@ from .models import Post,Comment
 from django.utils import timezone
 from .forms import PostForm,CommentForm
 from django.contrib.auth.decorators import login_required,permission_required
+from django.core.paginator import Paginator
 # Create your views here.
-def post_list(request):
+def post_list(request,page_number=1):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    current_page=Paginator(posts,5)
+    return render(request, 'blog/post_list.html', {'posts': current_page.page(page_number)})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -88,3 +90,18 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('blog.views.post_detail', pk=post_pk)
+
+def post_like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if pk in request.COOKIES:
+        post.likes-=1
+        post.save()
+        response=redirect('/')
+        response.delete_cookie(pk)
+        return response
+    else:
+        post.likes+=1
+        post.save()
+        response=redirect('/')
+        response.set_cookie(pk,'test')
+        return response
