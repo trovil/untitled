@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from embed_video.fields import EmbedVideoField
 # Create your models here.from django.db import models
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
@@ -12,6 +13,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(
             blank=True, null=True)
     likes=models.IntegerField(default=0)
+    video = EmbedVideoField(blank=True,null=True)
 
     def publish(self):
         self.published_date = timezone.now()

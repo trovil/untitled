@@ -105,3 +105,17 @@ def post_like(request, pk):
         response=redirect('/')
         response.set_cookie(pk,'test')
         return response
+
+def add_comment_to_post1(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'form': form})
+
+

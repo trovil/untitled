@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load embed_video_tags %}
 {% load staticfiles %}
 {% block content %}
     <div class="post">
@@ -17,11 +18,22 @@
         {% if post.image %}
             <img src="{{ post.image.url }}" >
         {% endif %}
+        {% if post.video %}
+            <p>{% video post.video '640x360' %}</p>
+        {% endif %}
         <p>{{ post.text|linebreaks }}</p>
-        <p><a href="{% url "blog.views.post_like" pk=post.pk %}"><img src="{% static "like1.png" %}" width="20px" height="20px"> {{ post.likes}}</p>
+        <p><a href="{% url "blog.views.post_like" pk=post.pk %}"><img src="{% static "like1.png" %}" width="20px" height="20px"> </a>{{ post.likes}}</p>
     </div>
             <hr>
     <a class="btn btn-default" href="{% url "add_comment_to_post" pk=post.pk %}">Add comment</a>
+
+
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form }}
+        <button type="submit" >Send</button>
+    </form>
+
+
     {% for comment in post.comments.all %}
         {% if user.is_authenticated or comment.approved_comment %}
         <div class="comment">
