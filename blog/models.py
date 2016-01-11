@@ -2,6 +2,12 @@ from django.db import models
 from django.utils import timezone
 from embed_video.fields import EmbedVideoField
 # Create your models here.from django.db import models
+class Tag(models.Model):
+    tag = models.CharField(unique=True, max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.tag
+
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
@@ -14,6 +20,7 @@ class Post(models.Model):
             blank=True, null=True)
     likes=models.IntegerField(default=0)
     video = EmbedVideoField(blank=True,null=True)
+    tags = models.ManyToManyField(Tag)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -28,7 +35,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')
     author = models.CharField(max_length=200)
-    text = models.TextField()
+    text = models.TextField(verbose_name='Comment')
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
@@ -38,3 +45,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+

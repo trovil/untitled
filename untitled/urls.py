@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^comment/(?P<pk>[0-9]+)/remove/$', views.comment_remove, name='comment_remove'),
     url(r'^post/(?P<pk>[0-9]+)/like/$', views.post_like, name='like'),
     url(r'^page/(?P<page_number>\d+)/$', views.post_list),
-    url(r'^post/(?P<pk>[0-9]+)/$', views.add_comment_to_post1),
+    url(r'^tag_search/(?P<tag>\w+)/$', views.post_tag_search, name='post_tag_search'),
+    url(r'^post/(?P<pk>[0-9]+)/edit/new/tag/$', views.new_tag, name='post_add_tag'),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

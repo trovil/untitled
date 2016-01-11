@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+    <form  enctype="multipart/form-data" method="post" id="tag_form" novalidate  class="post-form" >
+        {% csrf_token %}
+        {{ form_tag}}
+        <button type="submit" class="save btn btn-default">Save TAG</button>
+    </form>
+
+{% endblock %}

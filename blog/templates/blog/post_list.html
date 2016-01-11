@@ -3,11 +3,18 @@
 {% block content %}
 {% load embed_video_tags %}
             {% for post in posts %}
+
                 <div class="post">
                     <div class="date">
                         <p>published: {{ post.published_date }}</p>
                     </div>
                     <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                    {% if post.tags  %}
+                        {%for tags in post.tags.all %}
+                            <a class="btn btn-default btn-xs tags" href="{% url 'post_tag_search' tag=tags %}">{{ tags }}</a>
+                        {% endfor %}
+                    {% endif %}
+                    <hr>
                     {% if post.image %}
                     <img src="{{ post.image.url }}" >
                     {% endif %}
@@ -17,7 +24,7 @@
                     <p>{{ post.text|linebreaks }}</p>
                     <a href="{% url "blog.views.post_detail" pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
                     <a href="{% url "blog.views.post_like" pk=post.pk %}"> <img src="{% static "like1.png" %}" width="20px" height="20px"> {{ post.likes}} </a>
-
+                <hr>
                 </div>
             {% endfor %}
 
